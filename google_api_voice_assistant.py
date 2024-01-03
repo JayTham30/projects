@@ -3,7 +3,7 @@ import pyttsx3
 import webbrowser
 import time
 import openai
-openai.api_key =
+openai.api_key ="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"
 
 
 
@@ -17,7 +17,7 @@ engine = pyttsx3.init()
 
 
 # Function to generate response from GPT
-'''def generate_response(prompt):
+def generate_response(prompt):
    response = openai.Completion.create(
        engine="text-davinci-003",
        gpt_task=gpt_task,
@@ -27,7 +27,6 @@ engine = pyttsx3.init()
        temperature=0.5,
    )
    return response["choices"][0]["text"]
-   '''
 
 
 # Function to speak text
@@ -60,7 +59,7 @@ def recognize_speech():
 
 
 # Function to generate response using Chat-GPT API
-'''def gpt_response():
+def gpt_response():
    speak("what would you like chat g-p-t to do for you")
    gpt_task = recognize_speech()
    response = openai.Completion.create(
@@ -71,7 +70,7 @@ def recognize_speech():
        stop=None,
        temperature=0.5,
    )
-   return gpt_task(["choices"] [0] ["text"])'''
+   return gpt_task(["choices"] [0] ["text"])
 
 
 
