@@ -1,52 +1,55 @@
+# Python program to translate
+# speech to text and text to speech
 import speech_recognition as sr
 import pyttsx3
-
 
 import os
 from dotenv import load_dotenv
 load_dotenv()
-OPENAI_KEY = os.getenv("org-mcBMK7T1WEAzIfPJk8fV8qZk")
+OPENAI_KEY = os.getenv('OPENAI_KEY')
 
 import openai
-openai.api_key = "org-mcBMK7T1WEAzIfPJk8fV8qZk"
+openai.api_key = OPENAI_KEY
 
+# Function to convert text to
+# speech
 def SpeakText(command):
-    
-    #Initializing the engine
+     
+    # Initialize the engine
     engine = pyttsx3.init()
     engine.say(command)
-    engine.runAndWait
+    engine.runAndWait()
 
-#Initialize the recognizer
+# Initialize the recognizer
 r = sr.Recognizer()
 
 def record_text():
 # Loop in case of errors
-    while(1):
+    while(1):   
         try:
             # use the microphone as source for input.
             with sr.Microphone() as source2:
-
+                
                 # Prepare recognizer to receive input
                 r.adjust_for_ambient_noise(source2, duration=0.2)
 
-                print("I'm listening...")
+                print("I'm listening")
                 
-                #Listens to user's input
+                #listens for the user's input
                 audio2 = r.listen(source2)
-
+                
                 # Using google to recognize audio
                 MyText = r.recognize_google(audio2)
-
+    
                 return MyText
-            
+                
         except sr.RequestError as e:
-            print("Could not request results: {0}".format(e))
-        
+            print("Could not request results; {0}".format(e))
+            
         except sr.UnknownValueError:
             print("unknown error occurred")
 
-def send_to_chatGPT(message, model="gpt-3.5-turbo"):
+def send_to_chatGPT(messages, model="gpt-3.5-turbo"):
 
     response = openai.ChatCompletion.create(
         model=model,
@@ -61,7 +64,7 @@ def send_to_chatGPT(message, model="gpt-3.5-turbo"):
     messages.append(response.choices[0].message)
     return message
 
-messages = []
+messages = [{"role": "user", "content": "Please act like Jarvis from Iron man. From now on your name is Jarvis"}]
 while(1):
     text = record_text()
     messages.append({"role": "user", "content": text})
